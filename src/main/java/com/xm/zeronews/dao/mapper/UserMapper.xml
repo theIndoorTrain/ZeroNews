@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.zeronews.dao.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xm.zeronews.pojo.User">
+        <id column="id" property="id" />
+        <result column="email" property="email" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="signature" property="signature" />
+        <result column="code" property="code" />
+        <result column="image" property="image" />
+        <result column="bg" property="bg" />
+        <result column="type" property="type" />
+        <result column="gender" property="gender" />
+        <result column="birth" property="birth" />
+        <result column="createTime" property="createTime" />
+        <result column="isActive" property="isActive" />
+    </resultMap>
+
+    <resultMap id="WithLoveMap" type="com.xm.zeronews.pojo.User" extends="BaseResultMap">
+        <association property="love" javaType="com.xm.zeronews.pojo.Love">
+            <id column="b_id" property="id" />
+            <result column="isLove" property="isLove" />
+        </association>
+    </resultMap>
+
+    <resultMap id="WithNewsMap" type="com.xm.zeronews.pojo.User" extends="WithLoveMap">
+        <collection property="newsList" ofType="com.xm.zeronews.pojo.News">
+            <id column="c_id" property="id" />
+            <result column="title" property="title" />
+            <result column="context" property="context" />
+            <result column="images" property="images" />
+            <result column="c_type" property="type" />
+            <result column="status" property="status" />
+            <result column="pullTime" property="pullTime" />
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, email, username, password, signature, code, image, bg, type, gender, birth, createTime
+    </sql>
+
+    <select id="getWithLove" resultMap="WithLoveMap">
+        select a.*,b.isLove,b.id as b_id from user a left join love b on b.editorId=a.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <select id="pageUser" resultMap="WithLoveMap">
+        select a.*,b.isLove,b.id as b_id from user a left join love b on b.editorId=a.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <select id="pageNews" resultMap="WithNewsMap">
+        select a.*,b.isLove,b.id as b_id,
+        c.id as c_id,c.title,c.context,c.images,
+        c.type as c_type,c.status,c.pullTime
+        from user a
+left join love b on a.id=b.editorId
+left join news c on a.id=c.userId
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+</mapper>

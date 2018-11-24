@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.zeronews.dao.NewsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xm.zeronews.pojo.News">
+        <id column="id" property="id" />
+        <result column="userId" property="userId" />
+        <result column="title" property="title" />
+        <result column="context" property="context" />
+        <result column="images" property="images" />
+        <result column="type" property="type" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+        <result column="pullTime" property="pullTime" />
+        <result column="commentNum" property="commentNum" />
+        <result column="zanNum" property="zanNum" />
+        <result column="reply" property="reply" />
+    </resultMap>
+
+    <resultMap id="withLove" type="com.xm.zeronews.pojo.News" extends="BaseResultMap">
+        <association property="user" javaType="com.xm.zeronews.pojo.User">
+            <result column="username" property="username" />
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id, a.userId, a.title, a.context, a.images, a.type, a.status, a.createTime, a.pullTime
+    </sql>
+
+    <select id="pagePublic" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        ,count(c.id) as zanNum,count(b.id) as commentNum
+        from news a
+        left join comment b on b.newsId=a.id
+        left join zan c on c.newsId=a.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <select id="pageFailure" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        ,count(c.id) as zanNum,count(b.id) as commentNum,d.reply as reply
+        from news a
+        left join comment b on b.newsId=a.id
+        left join zan c on c.newsId=a.id
+        left join audit d on d.newsId=a.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <select id="pageWithNews" resultMap="withLove">
+      select <include refid="Base_Column_List"></include> ,b.username
+      ,count(d.id) as zanNum,count(c.id) as commentNum
+      from news a
+      left join user b on b.id=a.userId
+      left join comment c on c.newsId=a.id
+      left join zan d on d.newsId=a.id
+      left join love e on e.editorId=b.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+</mapper>

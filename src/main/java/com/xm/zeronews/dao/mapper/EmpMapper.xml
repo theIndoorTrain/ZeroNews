@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xm.zeronews.dao.EmpMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xm.zeronews.pojo.Emp">
+        <result column="num" property="num" />
+        <result column="userId" property="userId" />
+        <result column="auditNum" property="auditNum" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="status" property="status" />
+        <result column="type" property="type" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        num, userId, auditNum, name, phone, address, status, type, createTime
+    </sql>
+
+</mapper>
