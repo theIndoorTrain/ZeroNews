@@ -14,6 +14,7 @@ import com.xm.zeronews.service.UserService;
 import com.xm.zeronews.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -179,6 +180,38 @@ public class NewsController {
             }
         }
         return false;
+    }
+
+    @ApiOperation(value="获取热度排行榜")
+    @GetMapping("/ranking/{type}")
+    public List<NewsDto> list(@PathVariable Integer type) {
+        QueryWrapper<News> wrapper = new QueryWrapper<>();
+        if(0 != type) {
+            wrapper.eq("a.type",type);
+        }
+        wrapper.eq("a.status",5)
+                .groupBy("a.id")
+                .last("limit 15")
+                .orderByDesc("zanNum");
+        List<News> list = newsService.listType(wrapper);
+        return mapper.newsList(list);
+    }
+
+    @ApiOperation(value="模糊查询")
+    @PostMapping("/search")
+    public IPage<NewsDto> searchPublic(@RequestBody NewsDto newsDto){
+        if(null != newsDto) {
+            IPage page = new Page<>(newsDto.getCurrent(),newsDto.getSize());
+            QueryWrapper<News> wrapper = new QueryWrapper<>();
+            wrapper.groupBy("a.id");
+            wrapper.eq("a.status",5);
+            wrapper.and(i -> i.like("a.title",newsDto.getSearch()).or(j -> j.like("b.username",newsDto.getSearch())));
+            page = newsService.pageWithNews(page,wrapper);
+            List newsList = page.getRecords();
+            page.setRecords(mapper.newsList(newsList));
+            return page;
+        }
+        return null;
     }
 
 }

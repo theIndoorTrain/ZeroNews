@@ -1,12 +1,22 @@
 <template>
-    <div class="xm">
-        <div class="bg">
-            <img src="@/assets/logo2.png" class="logo">
-            <span v-text="Dtime">2018年11月12日 星期一</span>
-            <div class="search">
-                <el-input placeholder="请输入内容" v-model="input5" ><el-button slot="append">搜索</el-button></el-input>
-            </div>
-        </div>
+    <div class="bg">
+
+        <table>
+            <tr>
+                <td>
+                    <img src="@/assets/logo2.png" class="logo">
+                </td>
+                <td>
+                    <span v-text="Dtime"></span>
+                </td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="input5" width="400px"><el-button slot="append">搜索</el-button></el-input>
+                </td>
+            </tr>
+        </table>
+            
+            
+            
     </div>
 </template>
 
@@ -36,33 +46,27 @@
 
 <style scoped>
 
-.xm {
-    width: 100%;
-}
 
 
 .bg {
-    padding: 0 250px 0 250px;
     background-color: #DCDFE6;
 }
 
-.bg span {
-    vertical-align: 40px;
-    margin-left: 80px;
+table{
+    width: 100%;
+    padding: 0 200px;
 }
 
 .logo {
     width:300px;
-    margin-top: 3px;
-    position: relative;
-    left: -5%;
 }
 
-.search {
-    float: right;
-    margin: 33px;
-    width: 300px;
+td {
+    padding: 0 40px;
 }
+
+
+
 
 
 

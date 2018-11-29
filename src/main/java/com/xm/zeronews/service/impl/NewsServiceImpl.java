@@ -51,4 +51,9 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     public IPage pageFailure(IPage page, QueryWrapper<News> wrapper) {
         return newsMapper.pageFailure(page,wrapper);
     }
+
+    @Override
+    public List<News> listType(QueryWrapper<News> objectQueryWrapper) {
+        return newsMapper.listType(objectQueryWrapper);
+    }
 }

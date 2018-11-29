@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-carousel indicator-position="outside">
+        <el-carousel indicator-position="outside" height="400px">
             <el-carousel-item v-for="(item,index) in car" :key="index">
             <img :src="item" height="100%">
             </el-carousel-item>
@@ -25,13 +25,7 @@
 
 <style scoped>
 
-.el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
-  }
+
   
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;

@@ -38,4 +38,6 @@ public class NewsDto  extends PageInfo {
 
     private String reply;
 
+    private String search;
+
 }

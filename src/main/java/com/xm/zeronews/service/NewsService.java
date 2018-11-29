@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xm.zeronews.pojo.News;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 新闻表 服务类
@@ -22,4 +24,6 @@ public interface NewsService extends IService<News> {
     IPage pageWithNews(IPage page, QueryWrapper<News> wrapper);
 
     IPage pageFailure(IPage page, QueryWrapper<News> wrapper);
+
+    List<News> listType(QueryWrapper<News> objectQueryWrapper);
 }

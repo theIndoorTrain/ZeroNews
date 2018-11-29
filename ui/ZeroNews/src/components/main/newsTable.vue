@@ -1,5 +1,7 @@
 <template>
+<el-card>
 <div class="bg">
+    <h1>最新新闻</h1>
     <el-table
       :data="page.records"
       style="width: 100%;margin-bottom:20px">
@@ -21,8 +23,9 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="page.total">
     </el-pagination>
+  
 </div>
-    
+</el-card>    
 </template>
 
 <script>
@@ -90,6 +93,10 @@
 .title {
   text-decoration: none;
   color: #303133;
+}
+
+h1 {
+  margin: 5px auto;
 }
 
 </style>

@@ -52,6 +52,15 @@
         </where>
     </select>
 
+    <select id="listType" resultMap="BaseResultMap">
+        select a.id,a.title,count(b.id) as zanNum
+        from news a
+        left join zan b on a.id=b.newsId
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
     <select id="pageWithNews" resultMap="withLove">
       select <include refid="Base_Column_List"></include> ,b.username
       ,count(d.id) as zanNum,count(c.id) as commentNum

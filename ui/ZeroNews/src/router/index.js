@@ -4,6 +4,7 @@ import index from '@/page/main/index'
 import login from '@/page/main/login'
 import forget from '@/page/main/forget'
 import sighIn from '@/page/main/sighIn'
+import search from '@/page/main/search'
 import home from '@/page/home/home'
 import myhome from '@/page/home/myhome'
 import details from '@/page/home/details'
@@ -112,6 +113,11 @@ export default new Router({
           path:'history',
           name:'history',
           component:history
+        },
+        {
+          path:'search',
+          name:'search',
+          component:search
         },
       ]
     },

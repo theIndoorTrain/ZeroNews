@@ -6,6 +6,8 @@ import com.xm.zeronews.pojo.News;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 新闻表 Mapper 接口
@@ -21,4 +23,6 @@ public interface NewsMapper extends BaseMapper<News> {
     IPage pageWithNews(IPage page,@Param("ew") QueryWrapper<News> wrapper);
 
     IPage pageFailure(IPage page,@Param("ew") QueryWrapper<News> wrapper);
+
+    List<News> listType(@Param("ew") QueryWrapper<News> objectQueryWrapper);
 }
