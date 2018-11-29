@@ -6,13 +6,14 @@
                 :data="ranking"
                 style="width: 100%">
                 <el-table-column
-                    prop=""
                     label="编号"
+                    type="index"
                     width="50">
                 </el-table-column>
-                <el-table-column
-                    prop="title"
-                    label="新闻标题">
+                <el-table-column label="新闻标题">
+                    <template slot-scope="scope">
+                    <a :href="'/#/News?id='+scope.row.id" class="title">{{scope.row.title}}</a>
+                    </template>
                 </el-table-column>
                 </el-table>
             </h1>
@@ -28,15 +29,16 @@
           type: Number,
           default: 0
         },
+        },
         data() {
             return {
                 ranking: null,
             }
         },
         methods: {
-            getList(type) {
+            getList() {
                 var that = this
-                http.get("/news/ranking/"+type,function(data,status){
+                http.get("/news/ranking/"+this.type,function(data,status){
                     if(status==true) {
                         if(data != null) {
                             that.ranking = data
@@ -46,9 +48,8 @@
             }
         },
         created() {
-            this.getList(this.type)
+            this.getList()
         }
-      },
     }
 </script>
 

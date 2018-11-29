@@ -8,6 +8,17 @@
             </div>
         </div>
 
+        <div class="up" v-if="isMe">
+            <el-upload
+            class="avatar-uploader"
+            action="/api/upload/bg"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <el-button type="warning" icon="el-icon-upload" circle></el-button>
+            </el-upload>
+        </div>
+
     </div>
 </template>
 
@@ -23,6 +34,10 @@
                 default:false,
             },
             disLove:{
+                type:Boolean,
+                default:false,
+            },
+            isMe:{
                 type:Boolean,
                 default:false,
             }
@@ -50,6 +65,21 @@
                         }
                     }
                 })
+            },
+            handleAvatarSuccess(res, file) {
+                this.user.bg = file.response;
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 4;
+
+                if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 4MB!');
+                }
+                return isJPG && isLt2M;
             }
         },
         created() {
@@ -87,6 +117,12 @@ span {
 
 i {
     margin-left: 30px;
+}
+
+.up {
+    position: absolute;
+    right: 50px;
+    top:30px;
 }
 
 </style>

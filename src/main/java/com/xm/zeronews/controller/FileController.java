@@ -1,8 +1,11 @@
 package com.xm.zeronews.controller;
 
+import com.xm.zeronews.pojo.User;
+import com.xm.zeronews.service.UserService;
 import com.xm.zeronews.util.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +27,9 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class FileController {
 
+    @Autowired
+    private UserService userService;
+
     private Long MaxSize;
     @Value("${fileUpload.path}")
     private String path;
@@ -41,7 +47,12 @@ public class FileController {
     @PostMapping("/bg")
     public String uploadBg(MultipartFile file) {
         String filename = file.getOriginalFilename();
-        return upload(file,false,"bg"+filename.substring(filename.lastIndexOf('.')));
+        filename = upload(file,false,"bg"+filename.substring(filename.lastIndexOf('.')));
+        User user = new User();
+        user.setId(UserUtil.getUserId());
+        user.setBg(filename);
+        userService.updateById(user);
+        return filename;
     }
 
     @ApiOperation(value="上传新闻图片")

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Myhome :user="user"/>
+        <Myhome :user="user" isMe="true"/>
     </div>
 </template>
 

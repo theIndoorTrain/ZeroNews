@@ -10,7 +10,7 @@
                     <span v-text="Dtime"></span>
                 </td>
                 <td>
-                    <el-input placeholder="请输入内容" v-model="input5" width="400px"><el-button slot="append">搜索</el-button></el-input>
+                    <el-input placeholder="请输入内容" v-model="searchText" width="400px" @keyup.enter="search()"><el-button slot="append" @click="search()">搜索</el-button></el-input>
                 </td>
             </tr>
         </table>
@@ -22,6 +22,17 @@
 
 <script>
     export default {
+        data() {
+            return {
+                searchText: ""
+            }
+        },
+        methods: {
+            search() {
+                this.$router.push({path:'/search',query:{key:this.searchText}})
+                this.searchText = ""
+            }
+        },
         computed: {
             Dtime() {
                 var date = new Date();
