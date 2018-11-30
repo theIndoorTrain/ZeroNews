@@ -11,7 +11,7 @@
         <div class="up" v-if="isMe">
             <el-upload
             class="avatar-uploader"
-            action="http://localhost:8080/upload/bg"
+            action="http://10.255.185.244:8080/upload/bg"
             :headers="headers"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"

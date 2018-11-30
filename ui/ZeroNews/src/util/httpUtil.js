@@ -2,7 +2,7 @@ import axios from 'axios'
 import doCookie from '@/util/cookieUtil'
 
 axios.defaults.headers.common['Authorization'] = doCookie.getCookie("SESSIONID")
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = 'http://10.255.185.244:8080'
 
 
 /**

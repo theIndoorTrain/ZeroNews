@@ -108,7 +108,7 @@ export default {
         },
 
       },
-      serverUrl: "http://localhost:8080/upload/news", // 这里写你要上传的图片服务器地址
+      serverUrl: "http://10.255.185.244:8080/upload/news", // 这里写你要上传的图片服务器地址
       imageUrl:'',
       images:null,
       headers:{

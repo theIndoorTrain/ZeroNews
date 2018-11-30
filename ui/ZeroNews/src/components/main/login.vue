@@ -11,7 +11,7 @@
             <el-form-item label="选择">
                 <template>
                     <el-radio v-model="user.type" :label="1">用户</el-radio>
-                    <el-radio v-model="user.type" :label="2">记者</el-radio>
+                    <el-radio v-model="user.type" :label="2">编辑</el-radio>
                     <el-radio v-model="user.type" :label="3">主编</el-radio>
                 </template>
             </el-form-item>
