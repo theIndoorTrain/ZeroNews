@@ -91,7 +91,7 @@
     border-radius: 50%;
     border: 2px;
     border-style:solid;
-    border-color: bisque;
+    border-color: whitesmoke;
 }
 
 .item {

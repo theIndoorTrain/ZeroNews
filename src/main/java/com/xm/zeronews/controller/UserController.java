@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2018-11-14
  */
 @Api(value="UserController",tags="用户管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {

@@ -27,6 +27,7 @@
 <script>
     import check from '@/util/checkUtil'
     import http from '@/util/httpUtil'
+    import doCookie from '@/util/cookieUtil'
     export default {
         data() {
             return {
@@ -49,11 +50,12 @@
                     this.msg('邮箱'+str,'warning')
                     return
                 }
-                var that = this
+                var that = this 
                 http.post('/doLogin',this.user,function(data,status){
 
                     if(status==true) {
                         if(data != null) {
+                            doCookie.setCookie("SESSIONID",data,1)
                             that.msg('登陆成功','success')
                             that.$router.push("/")
                             return

@@ -1,13 +1,16 @@
 import axios from 'axios'
+import doCookie from '@/util/cookieUtil'
 
-export var baseurl = '/api'
+axios.defaults.headers.common['Authorization'] = doCookie.getCookie("SESSIONID")
+axios.defaults.baseURL = 'http://localhost:8080'
+
 
 /**
  * Get请求
  */
 export function get(url, callback){
     console.log('测试get请求')
-    axios.get(baseurl+url)
+    axios.get(url)
     .then(function (response) {
         console.log(response)
         if(response.data.length==0 || response.data==null) {
@@ -24,7 +27,7 @@ export function get(url, callback){
 
 export function remove(url, callback){
     console.log('测试delete请求')
-    axios.delete(baseurl+url)
+    axios.delete(url)
     .then(function (response) {
         console.log(response)
         if(response.data.length==0 || response.data==null) {
@@ -41,7 +44,7 @@ export function remove(url, callback){
 
 export function post(url, data, callback){
     console.log('测试get请求')
-    axios.post(baseurl+url,data)
+    axios.post(url,data)
     .then(function (response) {
         console.log(response)
         if(response.data.length==0 || response.data==null) {
@@ -58,7 +61,7 @@ export function post(url, data, callback){
 
 export function put(url, data, callback){
     console.log('测试get请求')
-    axios.put(baseurl+url,data)
+    axios.put(url,data)
     .then(function (response) {
         console.log(response)
         if(response.data.length==0 || response.data==null) {

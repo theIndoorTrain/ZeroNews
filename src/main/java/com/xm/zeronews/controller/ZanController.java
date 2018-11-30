@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
  * @since 2018-11-21
  */
 @Api(value="ZanController",tags="赞管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/zan")
 public class ZanController {

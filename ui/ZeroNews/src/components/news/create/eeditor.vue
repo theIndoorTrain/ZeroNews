@@ -4,7 +4,7 @@
       <el-upload
         class="avatar-uploader"
         :action="serverUrl"
-        :headers="header"
+        :headers="headers"
         :show-file-list="false"
         :on-success="uploadSuccess"
         :on-error="uploadError"
@@ -40,6 +40,7 @@ const toolbarOptions = [
   ["link", "image", "video"] // 链接、图片、视频
 ];
 
+import doCookie from '@/util/cookieUtil'
 import {quillEditor,Quill} from "vue-quill-editor";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
@@ -107,12 +108,12 @@ export default {
         },
 
       },
-      serverUrl: "/api/upload/news", // 这里写你要上传的图片服务器地址
+      serverUrl: "http://localhost:8080/upload/news", // 这里写你要上传的图片服务器地址
       imageUrl:'',
       images:null,
-      header: {
-        token: sessionStorage.token
-      } // 有的图片服务器要求请求头需要有token
+      headers:{
+        Authorization:doCookie.getCookie("SESSIONID")
+      }// 有的图片服务器要求请求头需要有token
     };
   },
 

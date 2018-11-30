@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
  * @since 2018-11-15
  */
 @Api(value="AuditController",tags="审核管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/audit")
 public class AuditController {

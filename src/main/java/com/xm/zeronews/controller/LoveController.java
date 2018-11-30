@@ -32,6 +32,7 @@ import java.util.List;
  * @since 2018-11-15
  */
 @Api(value="LoveController",tags="关注管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/love")
 public class LoveController {

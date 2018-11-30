@@ -6,7 +6,8 @@
             <el-form-item label="上传头像">
                 <el-upload
                     class="avatar-uploader"
-                    action="/api/upload/head"
+                    action="http://localhost:8080/upload/head"
+                    :headers="headers"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -40,10 +41,14 @@
 
 <script>
     import http from '@/util/httpUtil'
+    import doCookie from '@/util/cookieUtil'
     export default {
         data() {
             return {
-                user: null
+                user: null,
+                headers:{
+                    Authorization:doCookie.getCookie("SESSIONID")
+                }
             }
         },
         methods: {

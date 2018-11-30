@@ -28,6 +28,7 @@ import java.util.List;
  */
 
 @Api(value="CommentController",tags="评论管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/comment")
 public class CommentController {

@@ -29,6 +29,7 @@ import java.util.List;
  * @since 2018-11-15
  */
 @Api(value="EmpController",tags="职员管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/emp")
 public class EmpController {

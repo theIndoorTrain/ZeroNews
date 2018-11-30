@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @Api(value="AdminController",tags="系统管理")
+@CrossOrigin
 @RestController
 public class AdminController {
 
@@ -33,7 +34,7 @@ public class AdminController {
 
     @ApiOperation(value="用户登录")
     @PostMapping("/doLogin")
-    public UserDto doLogin(@RequestBody UserDto userDto) {
+    public String doLogin(@RequestBody UserDto userDto) {
         if(null != userDto) {
             User user = mapper.dtoToUser(userDto);
             String email = user.getEmail()+","+user.getType();
@@ -44,8 +45,8 @@ public class AdminController {
             } catch (Exception e) {
                 return null;
             }
-            user = (User) currentUser.getPrincipal();
-            return mapper.userToDto(user);
+
+            return (String) currentUser.getSession().getId();
         }
         return null;
     }

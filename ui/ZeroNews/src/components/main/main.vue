@@ -30,6 +30,7 @@
 <style scoped>
 
 .bg {
+    width: 80%;
     margin: 20px 180px;
 }
 

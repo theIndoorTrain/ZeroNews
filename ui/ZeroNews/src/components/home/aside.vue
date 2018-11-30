@@ -1,6 +1,6 @@
 <template>
     <div class="bg">
-        <img src="@/assets/logo2.png" width="90%" class="logo">
+        <img src="@/assets/logo3.png" width="90%" class="logo">
         <el-menu :default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#2a5caa" text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item :index="item.index" v-for="item of type" :key="item.index" @click="to(item.path)">
                 <span slot="title">{{item.title}}</span>

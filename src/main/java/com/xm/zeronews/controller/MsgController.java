@@ -25,6 +25,7 @@ import java.util.List;
  * @since 2018-11-15
  */
 @Api(value="MsgController",tags="消息管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/msg")
 public class MsgController {

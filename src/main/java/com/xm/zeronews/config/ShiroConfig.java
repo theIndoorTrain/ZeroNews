@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.xm.zeronews.service.UserService;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -55,6 +57,7 @@ public class ShiroConfig {
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置realm.
+        securityManager.setSessionManager(sessionManager());
         securityManager.setRealm(myShiroRealm());
         return securityManager;
     }
@@ -75,6 +78,17 @@ public class ShiroConfig {
     @Bean
     public MyRealm myShiroRealm() {
         return new MyRealm(userService);
+    }
+
+    @Bean("sessionManager")
+    public SessionManager sessionManager(){
+        CustomSessionManager manager = new CustomSessionManager();
+		/*使用了shiro自带缓存，
+		如果设置 redis为缓存需要重写CacheManager（其中需要重写Cache）
+		manager.setCacheManager(this.RedisCacheManager());*/
+
+        manager.setSessionDAO(new EnterpriseCacheSessionDAO());
+        return manager;
     }
 
 }

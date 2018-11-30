@@ -11,7 +11,8 @@
         <div class="up" v-if="isMe">
             <el-upload
             class="avatar-uploader"
-            action="/api/upload/bg"
+            action="http://localhost:8080/upload/bg"
+            :headers="headers"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -24,6 +25,7 @@
 
 <script>
     import http from "@/util/httpUtil"
+    import doCookie from '@/util/cookieUtil'
     export default {
         props: {
             user: {
@@ -44,7 +46,10 @@
         },
         data() {
             return {
-                key: null
+                key: null,
+                headers:{
+                    Authorization:doCookie.getCookie("SESSIONID")
+                }
             }
         },
         methods: {

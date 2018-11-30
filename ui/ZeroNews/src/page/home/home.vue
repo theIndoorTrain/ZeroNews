@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div width="100%">
         <el-aside width="15%" class="aside">
             <Aside/>
         </el-aside>
@@ -25,7 +25,7 @@
             var that = this
             http.get("/user/isLogin",function(data,status){
                 if(status!=true || data==null) {
-                    //that.$router.push("/login")
+                    that.$router.push("/login")
                 }
             })
         }

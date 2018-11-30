@@ -30,6 +30,7 @@ import java.util.List;
  * @since 2018-11-15
  */
 @Api(value="AdminController",tags="新闻管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/news")
 public class NewsController {

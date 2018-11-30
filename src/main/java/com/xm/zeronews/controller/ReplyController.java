@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
  * @since 2018-11-15
  */
 @Api(value="ReplyController",tags="回复管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/reply")
 public class ReplyController {
