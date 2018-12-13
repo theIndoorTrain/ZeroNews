@@ -20,7 +20,6 @@
     export default {
         methods: {
             to(address) {
-                console.log(address)
                 this.$router.push('/home/news/'+address)
             }
         },

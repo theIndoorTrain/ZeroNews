@@ -3,7 +3,7 @@
     <div class="bg">
         <img :src="reply.user.image" class="logo">
             <div class="userInfo">
-                <span v-text="reply.user.username"> </span><span v-text="reply.createTime.replace('T',' ')"></span><i class="el-icon-edit-outline" @click="subReply(reply)"></i><br>
+                <span v-text="reply.user.username"> </span><span v-text="reply.createTime.replace('T',' ')"></span><el-tooltip content="回复" placement="right-start"><i class="el-icon-edit-outline" @click="subReply(reply)"></i></el-tooltip><br>
                 <p><span>回复 </span><span v-text="reply.replyUser.username"></span>: {{reply.context}}</p>
         </div>
     </div>
@@ -12,6 +12,7 @@
 
 <script>
     import http from '@/util/httpUtil'
+    import check from '@/util/checkUtil'
     export default {
         props: {
             reply: {
@@ -32,6 +33,10 @@
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 }).then(({ value }) => {
+                if(check.isNull(value) == true) {
+                    this.$message.warning("回复内容不可为空！")
+                    return
+                }
                 var reply ={
                     commentId:replys.commentId,
                     replyUserId:replys.userId,
@@ -39,6 +44,7 @@
                 }
                 http.post("/reply/create",reply,function(data,status){
                     if(status==true) {
+                        that.$emit('subReply')
                         that.$message({
                             type: 'success',
                             message: "回复提交成功！"

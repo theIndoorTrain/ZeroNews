@@ -14,7 +14,6 @@
     export default {
         methods: {
             to(address) {
-                console.log(address)
                 this.$router.push('/home/love/'+address)
             }
         },

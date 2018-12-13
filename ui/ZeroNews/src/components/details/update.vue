@@ -6,7 +6,7 @@
             <el-form-item label="上传头像">
                 <el-upload
                     class="avatar-uploader"
-                    action="http://10.255.185.244:8080/upload/head"
+                    action="http://118.89.164.139:8080/upload/head"
                     :headers="headers"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
@@ -53,6 +53,11 @@
         },
         methods: {
             save() {
+                var date = new Date();
+                if(this.user.birth > date) {
+                    this.$message.warning("出生日期不能超过今天")
+                    return
+                }
                 var that = this
                 http.put("/user/update",this.user,function(data,status) {
                     if(status==true) {

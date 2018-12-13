@@ -2,6 +2,7 @@
     <div class="bg">
         <Login class="login"/>
         <img src="@/assets/logo1.png" class="logo">
+        <el-button type="text" class="button"  icon="el-icon-arrow-left" @click="goback">返回</el-button>
     </div>
 </template>
 
@@ -11,7 +12,12 @@
         name:'login',
         components:{
             Login,
-        }
+        },
+        methods: {
+            goback() {
+                this.$router.go(-1)
+            }
+        },
     }
 </script>
 
@@ -35,6 +41,12 @@
     transform: translateY(-50%)
 }
 
+.button{
+    position: absolute;
+    font-size: 20px;
+    color:whitesmoke;
+    right: 50px;
+}
 
 .logo {
     width:12%;

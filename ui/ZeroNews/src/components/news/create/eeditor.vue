@@ -108,7 +108,7 @@ export default {
         },
 
       },
-      serverUrl: "http://10.255.185.244:8080/upload/news", // 这里写你要上传的图片服务器地址
+      serverUrl: "http://118.89.164.139:8080/upload/news", // 这里写你要上传的图片服务器地址
       imageUrl:'',
       images:null,
       headers:{
@@ -131,12 +131,10 @@ export default {
 
     // 富文本图片上传前
     beforeUpload(file) {
-      console.log("1."+file)
       this.quillUpdateImg = true;
     },
 
     uploadSuccess(res, file) {
-      console.log("2."+file)
       this.imageUrl = file.response
       this.images = (this.images==null?"":(this.images+"#")) + this.imageUrl
       // res为图片服务器返回的数据

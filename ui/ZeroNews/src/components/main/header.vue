@@ -13,8 +13,8 @@
             <el-menu-item index="10" @click="to('/other')">其他</el-menu-item>
             <el-button type="text" class="lab" v-if="isLogin" @click="logout">注销</el-button>
             <el-button type="text" class="lab" v-if="!isLogin" @click="to('/sighIn')">注册</el-button>
-            <el-tooltip class="item" effect="light" content="个人中心" placement="bottom">
-            <img :src="image" class="logo" v-if="isLogin" @click="to('/home')"/>
+            <el-tooltip class="item"  content="个人中心" placement="bottom">
+                <img :src="image" class="logo" v-if="isLogin" @click="to('/home')"/>
             </el-tooltip>
             <el-button type="text" class="lab" v-if="!isLogin" @click="to('/login')">登录</el-button>   
         </el-menu>
@@ -50,16 +50,19 @@
                         });
                     }
                 })
+            },
+            get() {
+                var that = this
+                http.get("/user/isLogin",function(data,status){
+                    if(status==true && data!=null) {
+                        that.isLogin = true
+                        that.image = data.image
+                    }
+                })
             }
         },
         created() {
-            var that = this
-            http.get("/user/isLogin",function(data,status){
-                if(status==true && data!=null) {
-                    that.isLogin = true
-                    that.image = data.image
-                }
-            })
+            this.get()
         }
     }
 </script>

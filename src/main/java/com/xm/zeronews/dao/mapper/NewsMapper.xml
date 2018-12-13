@@ -31,7 +31,7 @@
 
     <select id="pagePublic" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"></include>
-        ,count(c.id) as zanNum,count(b.id) as commentNum
+        ,count(distinct c.id) as zanNum,count(distinct b.id) as commentNum
         from news a
         left join comment b on b.newsId=a.id
         left join zan c on c.newsId=a.id
@@ -42,7 +42,7 @@
 
     <select id="pageFailure" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"></include>
-        ,count(c.id) as zanNum,count(b.id) as commentNum,d.reply as reply
+        ,count(distinct c.id) as zanNum,count(distinct b.id) as commentNum,d.reply as reply
         from news a
         left join comment b on b.newsId=a.id
         left join zan c on c.newsId=a.id
@@ -53,7 +53,7 @@
     </select>
 
     <select id="listType" resultMap="BaseResultMap">
-        select a.id,a.title,count(b.id) as zanNum
+        select a.id,a.title,count(distinct b.id) as zanNum
         from news a
         left join zan b on a.id=b.newsId
         <where>
@@ -63,7 +63,7 @@
 
     <select id="pageWithNews" resultMap="withLove">
       select <include refid="Base_Column_List"></include> ,b.username
-      ,count(d.id) as zanNum,count(c.id) as commentNum
+      ,count(distinct d.id) as zanNum,count(distinct c.id) as commentNum
       from news a
       left join user b on b.id=a.userId
       left join comment c on c.newsId=a.id

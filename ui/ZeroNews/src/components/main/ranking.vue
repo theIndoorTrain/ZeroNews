@@ -6,7 +6,7 @@
                 :data="ranking"
                 style="width: 100%">
                 <el-table-column
-                    label="编号"
+                    label="排行"
                     type="index"
                     width="50">
                 </el-table-column>
@@ -54,5 +54,10 @@
 </script>
 
 <style scoped>
+
+.title {
+  text-decoration: none;
+  color: #303133;
+}
 
 </style>

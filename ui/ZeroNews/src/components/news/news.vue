@@ -1,11 +1,16 @@
 <template>
     <div>
         <el-card shadows="always" class="bg">
+            <el-button type="text" class="gobutton"  icon="el-icon-arrow-left" @click="goback">返回</el-button>
             <div class="title">
                 <h1>{{news.title}}</h1>
                 <hr>
                 <div class="head">
-                    <a :href="'/#/details?id='+news.userId"><img :src="news.user.image" class="logo"></a>
+                    <a :href="'/#/details?id='+news.userId">
+                        <el-tooltip content="作者" placement="left-start">
+                            <img :src="news.user.image" class="logo">
+                        </el-tooltip>
+                    </a>
                     <div class="userInfo">
                         <span>编辑：{{news.user.username}}</span><br>
                         <span v-if="news.status==5">{{news.pullTime.replace("T"," ")}}</span>
@@ -23,12 +28,15 @@
                 <h3>- THE END -</h3>
                 <p>免责声明：本文来自零点新闻客户端自媒体，不代表零点网的观点和立场。</p>
                 <div>
+                    <el-tooltip content="点赞" placement="right-start">
                     <svg class="icon zan" aria-hidden="true" v-if="!zan" @click="dianZan">
                         <use xlink:href="#icon-zan"></use>
                     </svg>
+                    
                     <svg class="icon zan active" aria-hidden="true" v-if="zan">
                         <use xlink:href="#icon-zan"></use>
                     </svg>
+                    </el-tooltip>
                     <h3>赞</h3>
                 </div>
                 <br>
@@ -47,7 +55,7 @@
                 </el-input>
                 <h1>全部评论</h1>
                 <hr>
-                <Comment/>
+                <Comment ref="comment"/>
             </div>
         </el-card>
     </div>
@@ -57,6 +65,7 @@
     import "@/fonticon/iconfont.js"
     import Comment from "@/components/comment/comment"
     import http from '@/util/httpUtil'
+    import check from '@/util/checkUtil'
     export default {
         data() {
             return {
@@ -71,6 +80,7 @@
                 http.post("/zan/"+this.news.id,null,function(data,status){
                     if(status == true) {
                         that.zan = true
+                        that.$message.success("点赞+1！")
                     } else {
                         that.$router.push("/login")
                     }
@@ -84,7 +94,14 @@
                     }
                 })
             },
+            goback() {
+                this.$router.go(-1)
+            },
             subComment() {
+                if(check.isNull(this.context)== true) {
+                    this.$message.warning("评论内容不可为空！")
+                    return
+                }
                 var comment ={
                     context:this.context,
                     newsId:this.news.id
@@ -92,7 +109,14 @@
                 var that = this
                 http.post("/comment/create",comment,function(data,status) {
                     if(status == true) {
+                        var pageInfo={
+                            current:1,
+                            size:15,
+                            newsId:that.news.id,
+                        }
+                        that.$refs.comment.getPage(pageInfo)
                         that.context = null
+                        that.$message.success("评论提交成功！")
                     } else {
                         that.$router.push("/login")
                     }

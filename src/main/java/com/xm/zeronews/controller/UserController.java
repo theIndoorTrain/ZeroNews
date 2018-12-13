@@ -33,7 +33,17 @@ public class UserController {
     @GetMapping("/isLogin")
     @ApiOperation(value="获取用户信息")
     public UserDto get() {
-        return mapper.userToDto(userService.getById(UserUtil.getUserId()));
+        Long id = null;
+        try {
+            id =  UserUtil.getUserId();
+        }catch (Exception e){
+            System.out.println("用户未登陆");
+        }
+        if(null != id){
+            User user = userService.getById(id);
+            return mapper.userToDto(user);
+        }
+        return null;
     }
 
     @PutMapping("/update")

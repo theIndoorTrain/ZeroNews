@@ -21,10 +21,13 @@
             </el-form-item>
             
         </el-form>
+
+        
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
     import check from '@/util/checkUtil'
     import http from '@/util/httpUtil'
     import doCookie from '@/util/cookieUtil'
@@ -56,8 +59,9 @@
                     if(status==true) {
                         if(data != null) {
                             doCookie.setCookie("SESSIONID",data,1)
+                            axios.defaults.headers.common['Authorization'] = doCookie.getCookie("SESSIONID")
                             that.msg('登陆成功','success')
-                            that.$router.push("/")
+                            that.$router.go(-1)
                             return
                         }
                         that.msg('邮箱或密码、用户类型错误！','error')
@@ -93,5 +97,6 @@
     top: 20px;
     left: 20px;
 }
+
 
 </style>

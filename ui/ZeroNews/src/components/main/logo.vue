@@ -10,7 +10,7 @@
                     <span v-text="Dtime"></span>
                 </td>
                 <td>
-                    <el-input placeholder="请输入内容" v-model="searchText" width="400px" @keyup.enter="search()"><el-button slot="append" @click="search()">搜索</el-button></el-input>
+                    <el-input placeholder="请输入新闻标题或编辑名称" v-model="searchText" width="400px" @keyup.enter="search()"><el-button slot="append" @click="search()">搜索</el-button></el-input>
                 </td>
             </tr>
         </table>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+    import check from '@/util/checkUtil'
     export default {
         data() {
             return {
@@ -29,6 +30,10 @@
         },
         methods: {
             search() {
+                if(check.isNull(this.searchText) == true) {
+                    this.$message.warning("搜索关键字不可为空！")
+                    return
+                }
                 this.$router.push({path:'/search',query:{key:this.searchText}})
                 this.searchText = ""
             }

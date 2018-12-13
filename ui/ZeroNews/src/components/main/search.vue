@@ -1,8 +1,9 @@
 <template>
     <div class="bg">
         <el-card>
+            <el-button type="text" class="button"  icon="el-icon-arrow-left" @click="goback">返回</el-button>
             <div class="search">
-                <el-input placeholder="请输入内容" v-model="key" @keyup.enter="search()" class="input-with-select">
+                <el-input placeholder="请输入新闻标题或编辑名称" v-model="key" @keyup.enter="search()" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search"  @click="search()"></el-button>
                 </el-input>
                 <p v-if="key">搜索关键词“{{key}}”</p>
@@ -23,7 +24,7 @@
 
                 <el-pagination
                 @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
+                @current-change="currentChange"
                 :current-page="page.curent"
                 :page-sizes="[5]"
                 :page-size="page.size"
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+    import check from '@/util/checkUtil'
     import http from '@/util/httpUtil'
     export default {
         data() {
@@ -46,8 +48,17 @@
             }
         },
         methods: {
-            search(page) {
+            search(current) {
+                if(check.isNull(this.key) == true) {
+                    this.$message.warning("搜索关键字不可为空！")
+                    return
+                }
                 this.page = null
+                var page={
+                    current:current,
+                    size:5,
+                    search:this.key
+                }
                 var that = this
                 http.post("/news/search",page,function(data,status){
                     if(status==true) {
@@ -67,22 +78,15 @@
             return this.types[row.type%9]
             },
             currentChange(val) {
-                    var pageInfo={
-                        current:val,
-                        size:5,
-                        search:this.key
-                    }
-                    this.search(pageInfo)
+                    this.search(val)
             },
+            goback() {
+                this.$router.go(-1)
+            }
         },
         created() {
             this.key=this.$route.query.key
-            var page={
-                    current:1,
-                    size:5,
-                    search:this.key
-                }
-            this.search(page)
+            this.search()
         }
     }
 </script>
@@ -92,17 +96,18 @@
 .bg {
     width:90%;
     margin: 20px auto;
+    text-align: left;
 }
 
 .search {
     padding: 20px 100px;
     height:500px;
-    text-align: left;
 }
 
 .title {
   text-decoration: none;
   color: #303133;
 }
+
 
 </style>

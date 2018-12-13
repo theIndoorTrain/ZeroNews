@@ -16,7 +16,7 @@
 
     <el-pagination
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      @current-change="currentChange"
       :current-page="page.curent"
       :page-sizes="[15]"
       :page-size="page.size"
@@ -68,6 +68,7 @@
                 var pageInfo={
                     current:val,
                     size:15,
+                    type:this.type,
                 }
                 this.getPage(pageInfo)
             },

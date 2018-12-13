@@ -4,19 +4,21 @@
         <div class="logo">
             <img :src="user.image" width="300px" height="300px">
             <div>
-                <span >{{user.username}}<i class="el-icon-star-off" v-if="isLove" @click="love(true)"></i><i class="el-icon-star-on" v-if="disLove" @click="love(false)"></i></span>
+                <span >{{user.username}}<el-tooltip content="关注作者" placement="right-start"><i class="el-icon-star-off" v-if="isLove" @click="love(true)"></i></el-tooltip><el-tooltip content="取消关注" placement="right-start"><i class="el-icon-star-on" v-if="disLove" @click="love(false)"></i></el-tooltip></span>
             </div>
         </div>
 
         <div class="up" v-if="isMe">
             <el-upload
             class="avatar-uploader"
-            action="http://10.255.185.244:8080/upload/bg"
+            action="http://118.89.164.139:8080/upload/bg"
             :headers="headers"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
-            <el-button type="warning" icon="el-icon-upload" circle></el-button>
+            <el-tooltip content="上传主题图片" placement="right-start">
+                <el-button type="warning" icon="el-icon-upload" circle></el-button>
+            </el-tooltip>
             </el-upload>
         </div>
 

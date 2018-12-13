@@ -36,6 +36,7 @@
     import http from '@/util/httpUtil'
     import Add from '@/components/news/create/add'
     import Editor from '@/components/news/create/eeditor'
+    import check from '@/util/checkUtil'
     export default {
         data() {
             return {
@@ -59,32 +60,47 @@
             },
             stepTwo(){
                 this.step=2
+                if(check.isNull(this.news.title)==true) {
+                    this.$message.warning("新闻标题不可为空")
+                    this.step=1
+                    return
+                }
+                if(check.isNull(this.news.type)==true) {
+                    this.$message.warning("新闻类型不可为空")
+                    this.step=1
+                    return
+                } 
             },
             stepOne() {
                 this.step=1
             },
             stepThree(){
+                if(check.isNull(this.news.context)==true) {
+                    this.$message.warning("新闻内容不可为空")
+                    return
+                }
                 var that = this
                 if(this.news.id==null || this.news.id.length==0) {
                     http.post("/news/create",this.news,function(data,status){
                         if(status==true) {
                             if(data != null) {
                                 that.news=data
-                                that.$message.success="新闻保存成功"
+                                that.$message.success("新闻保存成功");
                                 that.id = data.id
                                 that.step=3
                             } 
                         }else {
-                            that.$message.error="网络拥挤，请稍后重试"
+                            that.$message.error("网络拥挤，请稍后重试");
                         }
                     })
                 } else {
                     http.put("/news/update",this.news,function(data,status){
                         if(status==true) {
-                            that.$message.success="新闻保存成功"
                             that.step=3
+                            that.$message.success("新闻更改成功");
+                            
                         } else {
-                            that.$message.error="网络拥挤，请稍后重试"
+                            that.$message.error("网络拥挤，请稍后重试");
                         }
                     })
                 }
@@ -93,9 +109,9 @@
                 var that = this
                 http.put("/news/pull",this.news,function(data,status){
                         if(status==true) {
-                            that.$message.success="新闻发布成功"
+                            that.$message.success("新闻发布成功!");
                         } else {
-                            that.$message.error="网络拥挤，请稍后重试"
+                            that.$message.error("网络拥挤，请稍后重试");
                         }
                 })
             }

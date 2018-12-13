@@ -2,6 +2,7 @@
     <div class="bg">
         <SighIn class="sigh"/>
         <img src="@/assets/logo1.png" class="logo">
+        <el-button type="text" class="button"  icon="el-icon-arrow-left" @click="goback">返回</el-button>
     </div>
 </template>
 
@@ -11,7 +12,12 @@
         name:'sighIn',
         components:{
             SighIn,
-        }
+        },
+        methods: {
+            goback() {
+                this.$router.go(-1)
+            }
+        },
         
     }
 </script>
@@ -40,6 +46,13 @@
     width:12%;
     position: absolute;
     left:12%;
+}
+
+.button{
+    position: absolute;
+    font-size: 20px;
+    color:whitesmoke;
+    right: 50px;
 }
 
 </style>
