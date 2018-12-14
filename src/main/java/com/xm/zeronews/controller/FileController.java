@@ -7,12 +7,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.StandardOpenOption;
 import java.util.UUID;
 
 /**
@@ -68,6 +72,13 @@ public class FileController {
     }
 
     private String upload(MultipartFile file,Boolean isNews,String fileName) {
+        File tmpfile = new File("/"+fileName);
+        try {
+            file.transferTo(tmpfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         String filepath = filepaths;
 
@@ -84,13 +95,63 @@ public class FileController {
             }
         }
         filepath += "/"+ fileName;
-        upFile = new File(path, filepath);
-        try {
-            file.transferTo(upFile);
-        } catch (IOException e) {
-            e.printStackTrace();
+        upFile = new File(path,filepath);
+        System.out.println("文件上传路径："+upFile.getAbsolutePath());
+
+        if(tmpfile.renameTo(upFile)){
+            System.out.println("文件上传成功！");
+            return filepath;
+        } else {
+            System.out.println("文件上传失败！");
         }
-        return filepath;
+        return null;
+
+        /*FileChannel inChannel =null;
+        FileChannel outChannel = null;
+        try {
+            inChannel =FileChannel.open(tmpfile.toPath(), StandardOpenOption.READ);
+            *//**
+             * StandardOpenOption.CREATE与StandardOpenOption.CREATE_NEW的区别
+             * 1.StandardOpenOption.CREATE：无则创建，有则覆盖
+             * 2.StandardOpenOption.CREATE_NEW：无则创建，有则报错
+             *//*
+            outChannel =FileChannel.open(upFile.toPath(), StandardOpenOption.WRITE,StandardOpenOption.CREATE);
+            //3.定义缓冲区
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+            //4.读取数据到缓冲区,再从缓冲区写入到文件
+            while(inChannel.read(buffer) != -1) {
+                //切换到读模式
+                buffer.flip();
+                //写操作到管道
+                outChannel.write(buffer);
+                //清空buffer
+                buffer.clear();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            //5.关闭通道和流
+            if(inChannel != null) {
+                try {
+                    inChannel.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            if(outChannel != null) {
+                try {
+                    outChannel.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            return filepath;
+        }*/
+
     }
 
 
